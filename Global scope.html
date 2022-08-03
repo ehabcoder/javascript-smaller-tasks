@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global scope</title>
+</head>
+
+<body>
+
+
+<script>
+/*
+ This can be fixed using many ways
+ 1. assign the function inside the getFullNameFunction() to a variable
+    then bind to it the this key word which in this case will refere to the person
+    object.
+ 2. converting the function inside the getFullNameFunction into an arrow function
+    why? because Arrow functions do not bind their own this , instead, they inherit the one from the parent scope, which is called "lexical scoping". 
+ 3. use person.firstName + ' ' + person.lastName; instead of this.firstname
+    why? because the normal function inside the object bind its own this and 
+    the this keyword will refere to the elements inside this function.
+    and the this keyword will always refere to whichever object calling it.
+*/
+var person = {
+    firstName: 'John',
+    lastName: 'Doe',
+    getFullNameFunction: function () {
+        let anotherFunc = (function(){
+            return this.firstName + ' ' + this.lastName;
+        });
+        return anotherFunc.bind(this);
+    }
+};
+console.log(person.getFullNameFunction()()); 
+</script>
+</body>
+
+</html>

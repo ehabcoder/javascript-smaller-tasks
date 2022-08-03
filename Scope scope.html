@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scope scope</title>
+</head>
+
+<body>
+
+    <script>
+    /*
+        I can write a whole article about this weird situation
+        but long story short, this is becasue the setTimeout()
+        is an asynchronous function.
+        As we know javascript is a single threaded language that
+        can not be blocked. which means when we get an async code 
+        the "event loop" will assign that code to the web api which
+        will process it then get it back into the stack and that result
+        will wait in the stack for it's turn.
+        so here when we run that code the for loop starts with 1
+        then it find the setTimeout() which will be handed to the web api
+        when we get the result of it after 1 second it will be too late and 
+        the for loop will be finished and the i variable not is 6.
+        then it will console.log(i) which is 6, 5 times.  
+    */
+        for (var i = 1; i < 6; i++) {
+            setTimeout(function () {
+                console.log(i);
+            }, 1000);
+        } 
+    </script>
+</body>
+
+</html>
